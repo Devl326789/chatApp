@@ -17,8 +17,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _submitAuthForm(
     String email,
-    String password,
     String username,
+    String password,
     File image,
     bool isLogin,
     BuildContext ctx,
@@ -47,12 +47,15 @@ class _AuthScreenState extends State<AuthScreen> {
 
         await ref.putFile(image).onComplete;
 
+        final imageUrl = await ref.getDownloadURL();
+
         await Firestore.instance
             .collection('users')
             .document(authResult.user.uid)
             .setData({
           'username': username,
           'email': email,
+          'image_url': imageUrl,
         });
       }
     } on PlatformException catch (err) {
