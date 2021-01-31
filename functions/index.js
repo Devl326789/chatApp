@@ -7,3 +7,10 @@ const functions = require("firebase-functions");
 //   functions.logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+exports.myFunction = functions.firestore
+  .document('chat/{message}')
+  .onCreate((snapshot, context) => {
+      console.log(snapshot.data())
+
+      return;
+  });
